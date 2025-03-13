@@ -132,15 +132,19 @@ const Buzos: React.FC = () => {
         let startX: number;
         let isDragging = false;
         
-        const handleTouchStart = (e: TouchEvent) => {
-          startX = e.touches[0].clientX;
+        const handleTouchStart = (e: Event) => {
+          // Cast the event to TouchEvent to access the touches property
+          const touchEvent = e as TouchEvent;
+          startX = touchEvent.touches[0].clientX;
           isDragging = true;
         };
         
-        const handleTouchMove = (e: TouchEvent) => {
+        const handleTouchMove = (e: Event) => {
           if (!isDragging) return;
           
-          const currentX = e.touches[0].clientX;
+          // Cast the event to TouchEvent to access the touches property
+          const touchEvent = e as TouchEvent;
+          const currentX = touchEvent.touches[0].clientX;
           const diff = startX - currentX;
           
           // Determine swipe direction
