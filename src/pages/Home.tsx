@@ -6,6 +6,7 @@ import SantaCruz from '../assets/SantaCruz.png';
 import Southside from '../assets/Southside.png';
 import whatsapp from '../assets/whatsapp.png';
 import instagram from '../assets/instagram.png';
+import Click from '../assets/Click2.jpg';
 import { Link } from 'react-router-dom';
 
 const Home: React.FC = () => {
@@ -145,25 +146,16 @@ const Home: React.FC = () => {
         </div>
       </header>
 
-      <section className={`hero ${isVisible.hero ? 'visible' : ''}`} id="inicio">
-  {/* Animated background elements */}
-  <div className="animated-element element-1"></div>
-  <div className="animated-element element-2"></div>
-  <div className="animated-element element-3"></div>
-  
-  <div className="logo-hero-wrapper">
-    <img src={logo} alt="Great Graduates Logo" className="logo-hero" />
-  </div>
-  
-  <div className="container">
-    <div className="hero-content">
-      <h1 className="animated-title">Bienvenidos a <span className="highlight-text">GREAT!</span></h1>
-      <p className="animated-subtitle">Llegamos para dejar una marca en tu último año escolar</p>
-      <p className="secondary-subtitle">Buzos de egresados personalizados</p>
-      <Link to="/buzos" className="cta-button">Nuestros Buzos</Link>
-    </div>
-  </div>
-</section>
+      <section className="hero" id="inicio">
+        <div className="container">
+          <div className="hero-content">
+            <h1>Bienvenidos a <span className="highlight-text">GREAT!</span></h1>
+            <p className="hero-subtitle">Llegamos para dejar una marca en tu último año escolar</p>
+            <p className="secondary-subtitle">Buzos de egresados personalizados</p>
+            <Link to="/buzos" className="cta-button">Nuestros Buzos</Link>
+          </div>
+        </div>
+      </section>
 
       <section className={`features ${isVisible.features ? 'visible' : ''}`}>
         <div className="container">
@@ -191,41 +183,57 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Nueva sección de Beneficios */}
-      <section className={`benefits ${isVisible.benefits ? 'visible' : ''}`} id="beneficios">
-        <div className="container">
-          <h2 className="section-title">Beneficios Exclusivos</h2>
-          <div className="benefits-container">
-            <div className="benefit-card">
-              <div className="benefit-content">
-                <h3>CONTRATANDO TUS BUZOS CON GREAT</h3>
-                <h2>DESCUENTO</h2>
-                <h3>EN TU FIESTA DE EGRESADOS</h3>
-                <div className="benefit-highlight">SANTA CRUZ</div>
-                <p className="benefit-note">EXCLUSIVO COLEGIOS CLIENTES</p>
-                <p className="benefit-hashtag">#SOMOSGREAT</p>
-              </div>
-              <div className="benefit-logo">
-                <img src={SantaCruz} alt="Logo del beneficio" />
-              </div>
-            </div>
-            
-            <div className="benefit-card">
-              <div className="benefit-content">
-                <h3>CONTRATANDO TUS BUZOS CON GREAT</h3>
-                <h2>DESCUENTO</h2>
-                <h3>EN TU FIESTA DE EGRESADOS</h3>
-                <div className="benefit-highlight">SOUTHSIDE EVENTOS</div>
-                <p className="benefit-note">EXCLUSIVO COLEGIOS CLIENTES</p>
-                <p className="benefit-hashtag">#SOMOSGREAT</p>
-              </div>
-              <div className="benefit-logo">
-                <img src={Southside} alt="Logo del beneficio" />
-              </div>
-            </div>
-          </div>
+      <section className="benefits" id="beneficios">
+  <div className="container">
+    <h2 className="section-title">Beneficios Exclusivos</h2>
+    <div className="benefits-container">
+      {/* Primera tarjeta existente */}
+      <div className="benefit-card">
+        <div className="benefit-content">
+          <h3>CONTRATANDO TUS BUZOS CON GREAT</h3>
+          <h2>DESCUENTO</h2>
+          <h3>EN TU FIESTA DE EGRESADOS</h3>
+          <div className="benefit-highlight">SANTA CRUZ</div>
+          <p className="benefit-note">EXCLUSIVO COLEGIOS CLIENTES</p>
+          <p className="benefit-hashtag">#SOMOSGREAT</p>
         </div>
-      </section>
+        <div className="benefit-logo">
+          <img src={SantaCruz} alt="Logo del beneficio" />
+        </div>
+      </div>
+      
+      {/* Segunda tarjeta existente */}
+      <div className="benefit-card">
+        <div className="benefit-content">
+          <h3>CONTRATANDO TUS BUZOS CON GREAT</h3>
+          <h2>DESCUENTO</h2>
+          <h3>EN TU FIESTA DE EGRESADOS</h3>
+          <div className="benefit-highlight">SOUTHSIDE EVENTOS</div>
+          <p className="benefit-note">EXCLUSIVO COLEGIOS CLIENTES</p>
+          <p className="benefit-hashtag">#SOMOSGREAT</p>
+        </div>
+        <div className="benefit-logo">
+          <img src={Southside} alt="Logo del beneficio" />
+        </div>
+      </div>
+      
+      {/* Nueva tarjeta centrada con tema oscuro */}
+      <div className="benefit-card dark-theme centered-third">
+        <div className="benefit-content">
+          <h3>CONTRATANDO TUS BUZOS CON GREAT</h3>
+          <h2>DESCUENTO</h2>
+          <h3>EN TU FOTOS Y VIDEOS</h3>
+          <div className="benefit-highlight">CLICK GRADUATES</div>
+          <p className="benefit-note">EXCLUSIVO COLEGIOS CLIENTES</p>
+          <p className="benefit-hashtag">#SOMOSGREAT</p>
+        </div>
+        <div className="benefit-logo">
+          <img src={Click} alt="Logo del beneficio de fotografía" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
       <footer className={`footer ${isVisible.footer ? 'visible' : ''}`} id="contacto">
         <div className="container">
