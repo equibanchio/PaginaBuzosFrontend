@@ -637,6 +637,15 @@ ul {
   }
 }
 
+.buzos-carousel {
+  height: 400px; 
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+}
+
 @media (max-width: 500px) {
   .buzos-banner h1 {
     font-size: 28px;
@@ -647,6 +656,6 @@ ul {
   }
   
   .buzos-carousel {
-    height: 250px;
+    height: 320px;
   }
 }
