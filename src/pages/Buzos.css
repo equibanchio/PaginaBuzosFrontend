@@ -1,0 +1,641 @@
+:root {
+  --primary-color: #000840;
+  --primary-light: #2a3380;
+  --primary-dark: #000528;
+  --accent-color: #0a2eff;
+  --text-color: #333;
+  --light-gray: #f5f5f5;
+  --medium-gray: #e0e0e0;
+  --white: #ffffff;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --hover-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Reset y estilos base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text-color);
+  line-height: 1.6;
+  background-color: var(--light-gray);
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Header */
+.header {
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+}
+
+.logo-container {
+  flex: 0 0 auto;
+}
+
+.logo {
+  height: 60px;
+  width: auto;
+}
+
+.nav-menu ul {
+  display: flex;
+}
+
+.nav-menu li {
+  margin-left: 30px;
+}
+
+.nav-menu a {
+  color: var(--primary-color);
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+/* Banner */
+.buzos-banner {
+  background: linear-gradient(rgba(0, 8, 64, 0.85), rgba(0, 8, 64, 0.85)), url('/assets/catalog-banner.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 140px 0 70px;
+  text-align: center;
+  color: var(--white);
+}
+
+.buzos-banner h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+  position: relative;
+  display: inline-block;
+}
+
+.buzos-banner h1:after {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 4px;
+  background: var(--accent-color);
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.buzos-banner p {
+  font-size: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Secciones principales */
+.buzos-showcase, .design-process {
+  padding: 60px 0;
+  background-color: var(--white);
+  overflow: hidden;
+}
+
+/* Animaciones */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.animate-on-scroll.animate-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Contenedor de imagen destacada */
+.feature-buzo-container {
+  margin-bottom: 30px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: var(--hover-shadow);
+}
+
+.feature-buzo-image {
+  height: 400px;
+  width: 100%;
+  position: relative;
+}
+
+.feature-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, var(--primary-dark), var(--primary-light));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  position: relative;
+}
+
+.feature-placeholder:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/assets/pattern.svg') center/cover;
+  opacity: 0.1;
+  animation: backgroundPan 30s linear infinite;
+}
+
+.feature-title {
+  font-size: 42px;
+  margin-bottom: 15px;
+  text-shadow: 0 2px 15px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 2;
+}
+
+.feature-subtitle {
+  font-size: 24px;
+  max-width: 600px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Carrusel de Buzos */
+.buzos-carousel-container {
+  margin-bottom: 30px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: var(--hover-shadow);
+}
+
+.carousel-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.buzos-carousel {
+  width: 100%;
+  position: relative;
+  height: 400px; /* Puedes ajustar esto si es necesario */
+  overflow: hidden;
+}
+
+.carousel-item {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+  pointer-events: none;
+}
+
+.carousel-item.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.carousel-button {
+  background: rgba(0, 8, 64, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.prev-button {
+  left: 20px;
+}
+
+.next-button {
+  right: 20px;
+}
+
+.carousel-button:hover {
+  background: var(--accent-color);
+  transform: scale(1.1);
+}
+
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--medium-gray);
+  margin: 0 6px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.indicator.active {
+  background: var(--accent-color);
+  transform: scale(1.2);
+}
+
+.buzo-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white);
+}
+
+/* Nuevo estilo para la imagen del buzo */
+.buzo-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Esto mantiene la proporción de la imagen */
+}
+
+.buzo-button, .feature-button, .cta-button {
+  display: inline-block;
+  background-color: var(--accent-color);
+  color: var(--white);
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.buzo-button {
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.buzo-button:hover, .feature-button:hover, .cta-button:hover {
+  background-color: var(--white);
+  color: var(--primary-color);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(10, 46, 255, 0.3);
+}
+
+/* Sección Mejora: Por qué elegirnos */
+.why-choose-us-section {
+  margin-bottom: 30px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--hover-shadow);
+  background: var(--white);
+}
+
+.why-choose-header {
+  background: linear-gradient(to right, var(--accent-color), var(--primary-light));
+  color: var(--white);
+  padding: 25px;
+  text-align: center;
+}
+
+.why-choose-header h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.why-choose-header p {
+  font-size: 18px;
+}
+
+.why-choose-content {
+  padding: 25px;
+  background: linear-gradient(145deg, var(--white), var(--light-gray));
+}
+
+.why-choose-info h3 {
+  color: var(--primary-color);
+  font-size: 28px;
+  margin-bottom: 25px;
+  position: relative;
+  text-align: center;
+}
+
+.why-choose-info h3:after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 3px;
+  background: var(--accent-color);
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.feature-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin: 15px 0 25px;
+}
+
+.feature-list li {
+  background-color: var(--white);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.feature-list li:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 8, 64, 0.2);
+}
+
+.feature-icon {
+  color: var(--accent-color);
+  font-weight: bold;
+  margin-right: 15px;
+  font-size: 20px;
+}
+
+.feature-button {
+  padding: 12px 30px;
+  font-size: 16px;
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+/* CTA Section */
+.buzos-cta {
+  padding: 60px 0;
+  background: linear-gradient(rgba(0, 8, 64, 0.9), rgba(0, 8, 64, 0.9)), url('/assets/cta-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  color: var(--white);
+  text-align: center;
+  position: relative;
+}
+
+.cta-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.cta-content h2 {
+  font-size: 36px;
+  margin-bottom: 15px;
+}
+
+.cta-content p {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+/* Process Cards */
+.design-process h2 {
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 36px;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.design-process h2:after {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 4px;
+  background: var(--accent-color);
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.process-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.process-card {
+  text-align: center;
+  padding: 30px 25px;
+  border-radius: 12px;
+  background-color: var(--light-gray);
+  transition: all 0.4s ease;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  /* Añadimos una opacidad inicial reducida */
+  opacity: 0.7;
+  transform: translateY(10px);
+}
+
+.process-card:before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, var(--primary-light), transparent);
+  transition: all 0.4s ease;
+}
+
+.process-card:hover:before {
+  top: 100%; /* Asegura que el gradiente de fondo no aparezca al pasar el cursor */
+}
+
+.process-card:hover {
+  transform: none; /* Quita la elevación al pasar el cursor */
+  box-shadow: none; /* Quita la sombra al pasar el cursor */
+  color: inherit; /* Mantiene el color de texto original */
+}
+
+.process-icon {
+  font-size: 42px;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  transition: all 0.4s ease;
+}
+
+.process-card:hover .process-icon {
+  color: var(--primary-color); /* Mantiene el color original del icono */
+  transform: none; /* Quita la escala al pasar el cursor */
+}
+
+.process-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  transition: all 0.4s ease;
+}
+
+.process-card:hover h3 {
+  color: var(--primary-color); /* Mantiene el color original del título */
+}
+
+.process-card.active-card {
+  opacity: 1;
+  transform: translateY(0);
+  box-shadow: var(--hover-shadow);
+}
+
+.process-card.active-card:before {
+  top: 0;
+}
+
+.process-card.active-card .process-icon {
+  color: var(--accent-color);
+  transform: scale(1.2);
+}
+
+/* Ajustamos la transición para que sea más suave */
+.process-card, .process-icon, .process-card:before {
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Animaciones */
+@keyframes backgroundPan {
+  from { background-position: 0% 0%; }
+  to { background-position: 100% 100%; }
+}
+
+/* Media Queries */
+@media (max-width: 992px) {
+  .buzos-carousel {
+    height: 350px;
+  }
+  
+  .feature-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none;
+  }
+  
+  .buzos-carousel {
+    height: 400px;
+  }
+  
+  .feature-list {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Menú móvil */
+  .mobile-menu-button {
+    display: block;
+    cursor: pointer;
+    z-index: 101;
+  }
+  
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+  }
+  
+  .hamburger span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: var(--primary-color);
+    transition: all 0.3s ease;
+  }
+  
+  .hamburger.open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .hamburger.open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+  
+  .nav-menu.open {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--white);
+    padding-top: 80px;
+    z-index: 100;
+  }
+  
+  .nav-menu.open ul {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .nav-menu.open li {
+    margin: 15px 0;
+  }
+  
+  .nav-menu.open a {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 500px) {
+  .buzos-banner h1 {
+    font-size: 28px;
+  }
+  
+  .cta-content h2 {
+    font-size: 24px;
+  }
+  
+  .buzos-carousel {
+    height: 250px;
+  }
+}

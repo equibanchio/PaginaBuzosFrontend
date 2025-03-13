@@ -1,0 +1,376 @@
+import React, { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import './Buzos.css';
+import logo from '../assets/logo.png';
+
+const Buzos: React.FC = () => {
+    // Estado para controlar el menú responsive
+    const [menuOpen, setMenuOpen] = useState(false);
+    
+    // Referencia para animaciones
+    const buzosRef = useRef<HTMLDivElement>(null);
+    
+    // Estado para controlar el carrusel
+    const [currentBuzo, setCurrentBuzo] = useState(0);
+
+    const location = useLocation();
+
+    // Datos de ejemplo para los buzos
+    const [buzos, setBuzos] = useState<{ id: number; name: string; image: string; description: string }[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    // Añade esta parte al inicio del componente para manejar hash en URLs
+    useEffect(() => {
+      // Comprueba si hay un hash en la URL cuando se monta el componente
+      if (window.location.hash) {
+        const id = window.location.hash.substring(1); // Quita el '#' del hash
+        setTimeout(() => {
+          const element = document.getElementById(id);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      }
+    }, []);
+
+    // Efecto para cargar los datos de los buzos
+    useEffect(() => {
+      const fetchBuzos = async () => {
+          try {
+            const response = await fetch("http://127.0.0.1:8000/api/buzos/");
+            if (!response.ok) {
+                throw new Error("Error al obtener los buzos");
+            }
+            const data = await response.json();
+            setBuzos(data);
+            console.log("Datos de buzos cargados:", data);
+          } catch (error) {
+            console.error("Error:", error);
+          } finally {
+            setLoading(false);
+          }
+      };
+  
+      fetchBuzos();
+    }, []);
+
+    // Efecto para monitorear cuando los buzos están cargados
+    useEffect(() => {
+      if (buzos.length > 0) {
+        console.log("Buzos disponibles:", buzos);
+        console.log("URL de primera imagen:", `http://127.0.0.1:8000${buzos[0].image}`);
+      }
+    }, [buzos]);
+    
+    // Manejar el cierre del menú al hacer clic en un enlace
+    const handleMenuClick = () => {
+      setMenuOpen(false);
+    };
+
+    // Función para abrir/cerrar el menú
+    const toggleMenu = () => {
+      const newState = !menuOpen;
+      console.log("Menu state changed to:", newState);
+      setMenuOpen(newState);
+    };
+
+    // Función para navegar a secciones específicas
+    const scrollToSection = (id: string) => {
+      setMenuOpen(false); // Cierra el menú
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 300); // Pequeño retraso para permitir que el menú se cierre
+    };
+
+    // Efecto para manejar el scroll a la sección correcta al cargar la página
+    useEffect(() => {
+      // Verificar si hay un hash en la URL (por ejemplo, #design-process)
+      if (location.hash) {
+        // Dar tiempo para que el componente se renderice completamente
+        setTimeout(() => {
+          const element = document.querySelector(location.hash);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      }
+    }, [location]);
+    
+    // Funciones para navegación del carrusel
+    const nextBuzo = () => {
+      if (buzos.length > 0) {
+        setCurrentBuzo((prev) => (prev + 1) % buzos.length);
+      }
+    };
+    
+    const prevBuzo = () => {
+      if (buzos.length > 0) {
+        setCurrentBuzo((prev) => (prev - 1 + buzos.length) % buzos.length);
+      }
+    };
+    
+    // Efectos de animación al hacer scroll
+    useEffect(() => {
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+      };
+
+      const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-item');
+          }
+        });
+      };
+
+      const observer = new IntersectionObserver(handleIntersect, observerOptions);
+      
+      if (buzosRef.current) {
+        const items = buzosRef.current.querySelectorAll('.animate-on-scroll');
+        items.forEach(item => observer.observe(item));
+      }
+
+      return () => {
+        if (buzosRef.current) {
+          const items = buzosRef.current.querySelectorAll('.animate-on-scroll');
+          items.forEach(item => observer.unobserve(item));
+        }
+      };
+    }, []);
+
+    // Cambio automático del carrusel cada 5 segundos
+    useEffect(() => {
+      if (buzos.length > 0) {  // Solo activar el intervalo si hay buzos
+        const interval = setInterval(nextBuzo, 5000);
+        return () => clearInterval(interval);
+      }
+    }, [buzos.length]); // Dependencia en buzos.length
+
+    useEffect(() => {
+      // Selecciona todas las tarjetas de proceso
+      const processCards = document.querySelectorAll('.process-card');
+      
+      if (processCards.length > 0) {
+        // Configura el intervalo para animar las tarjetas secuencialmente
+        let currentIndex = 0;
+        
+        // Función para añadir la clase de animación a una tarjeta
+        const animateCard = (index: number) => {
+          // Primero reseteamos todas las tarjetas (opcional, dependiendo del efecto deseado)
+          processCards.forEach(card => {
+            card.classList.remove('active-card');
+          });
+          
+          // Añadimos la clase active a la tarjeta actual
+          if (index < processCards.length) {
+            processCards[index].classList.add('active-card');
+          }
+        };
+        
+        // Inicializa la primera tarjeta
+        animateCard(0);
+        
+        // Configura el intervalo para cambiar de tarjeta cada 3 segundos
+        const interval = setInterval(() => {
+          currentIndex = (currentIndex + 1) % processCards.length;
+          animateCard(currentIndex);
+        }, 3000);
+        
+        // Limpia el intervalo cuando el componente se desmonta
+        return () => clearInterval(interval);
+      }
+    }, []);
+
+    // Función para construir la URL de la imagen correctamente
+    const getImageUrl = (imagePath: string) => {
+      // Si la ruta ya es una URL completa, devuélvela tal cual
+      if (imagePath.startsWith('http')) {
+        return imagePath;
+      }
+      
+      const baseUrl = "http://127.0.0.1:8000";
+      
+      // Si la ruta incluye /media/, no añadas nada más
+      if (imagePath.includes('/media/')) {
+        return `${baseUrl}${imagePath}`;
+      }
+      
+      // En otros casos, asegúrate de que la ruta incluya /media/
+      const mediaPath = imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
+      return `${baseUrl}/media${mediaPath}`;
+    };
+
+    return (
+      <div className="buzos-page">
+        <header className="header">
+          <div className="container header-container">
+            <div className="logo-container">
+              <a href="/">
+                <img src={logo} alt="Great Graduates Logo" className="logo animate-logo" />
+              </a>
+            </div>
+            {/* Botón de menú hamburguesa para móviles */}
+            <div className="mobile-menu-button" onClick={toggleMenu}>
+              <div className={`hamburger ${menuOpen ? 'open' : ''}`}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+            {/* Menú de navegación con clase para abrir/cerrar */}
+            <nav className={`nav-menu ${menuOpen ? 'open' : ''}`}>
+              <ul>
+                <li><a href="/" className="menu-item" onClick={handleMenuClick}>Inicio</a></li>
+                <li><a href="#" className="active menu-item" onClick={handleMenuClick}>Buzos</a></li>
+                <li><a href="#design-process" className="menu-item" onClick={() => scrollToSection('design-process')}>Proceso</a></li>
+                <li><a href="/#beneficios" className="menu-item" onClick={handleMenuClick}>Beneficios</a></li>
+                <li><a href="/#contacto" className="menu-item" onClick={handleMenuClick}>Contacto</a></li>
+              </ul>
+            </nav>
+          </div>
+        </header>
+
+        <div className="buzos-banner">
+          <div className="container">
+            <h1>Nuestros Buzos</h1>
+            <p>Diseños exclusivos para que tu promoción brille</p>
+          </div>
+        </div>
+
+        <section className="buzos-showcase" ref={buzosRef}>
+          <div className="container">
+            {/* Presentación principal con imágenes grandes */}
+            <div className="feature-buzo-container animate-on-scroll">
+              <div className="feature-buzo-image">
+                <div className="feature-placeholder">
+                  <h2 className="feature-title">Colección 2025</h2>
+                  <p className="feature-subtitle">Calidad y estilo para tu promoción</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Carrusel de buzos - Una imagen a la vez - Solo imágenes sin texto */}
+            <div className="buzos-carousel-container animate-on-scroll">
+              <div className="carousel-navigation">
+                <button className="carousel-button prev-button" onClick={prevBuzo}>
+                  <i className="fas fa-chevron-left"></i>
+                </button>
+                
+                <div className="buzos-carousel">
+                {loading ? (
+                  <p>Cargando buzos...</p>
+                ) : buzos.length === 0 ? (
+                  <p>No se encontraron buzos</p>
+                ) : (
+                  buzos.map((buzo, index) => (
+                    <div
+                      className={`carousel-item ${index === currentBuzo ? 'active' : ''}`}
+                      key={buzo.id}
+                    >
+                      <div className="buzo-image">
+                        <img 
+                          src={getImageUrl(buzo.image)} 
+                          alt={buzo.name} 
+                          className="buzo-img" 
+                          onLoad={() => console.log(`Imagen cargada correctamente: ${buzo.name}`)}
+                          onError={(e) => console.error(`Error cargando imagen ${buzo.name}:`, e)}
+                        />
+                      </div>
+                    </div>
+                  ))
+                )}
+                </div>
+                <button className="carousel-button next-button" onClick={nextBuzo}>
+                  <i className="fas fa-chevron-right"></i>
+                </button>
+              </div>
+              
+              <div className="carousel-indicators">
+                {buzos.map((_, index) => (
+                  <button 
+                    key={index} 
+                    className={`indicator ${index === currentBuzo ? 'active' : ''}`}
+                    onClick={() => setCurrentBuzo(index)}
+                  />
+                ))}
+              </div>
+            </div>
+            
+            {/* Sección mejorada - La Diferencia Great Graduates */}
+            <div className="why-choose-us-section animate-on-scroll">
+              <div className="why-choose-header">
+                <h2>La Diferencia Great Graduates</h2>
+                <p>Cientos de promociones ya eligieron nuestros diseños</p>
+              </div>
+              <div className="why-choose-content">
+                <div className="why-choose-info">
+                  <h3>¿Por qué elegirnos?</h3>
+                  <ul className="feature-list">
+                    <li><span className="feature-icon">✓</span> Calidad premium garantizada</li>
+                    <li><span className="feature-icon">✓</span> Diseño personalizado</li>
+                    <li><span className="feature-icon">✓</span> Entrega rápida</li>
+                    <li><span className="feature-icon">✓</span> Materiales duraderos y cómodos</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="buzos-cta">
+          <div className="container">
+            <div className="cta-content">
+              <h2>¿Tienes una idea para tu promoción?</h2>
+              <p>Hacela realidad con nuestro equipo de diseño</p>
+              <a href="https://wa.me/5491168972616?text=Hola,%20quisiera%20obtener%20información%20sobre%20los%20buzos%20de%20egresados%20para%20mi%20curso.%20¡Gracias!" className="cta-button">Contactanos</a>
+            </div>
+          </div>
+        </section>
+
+        <section className="design-process" id="design-process">
+          <div className="container">
+            <h2>¿Cómo creamos tu buzo personalizado?</h2>
+            <div className="process-cards">
+              {[
+                {
+                  icon: "fas fa-comments",
+                  title: "Consulta Inicial",
+                  desc: "Charlamos sobre tus ideas y necesidades para tu buzo de egresados"
+                },
+                {
+                  icon: "fas fa-pencil-ruler",
+                  title: "Bocetos y Diseño",
+                  desc: "Creamos propuestas de diseño basadas en tus preferencias"
+                },
+                {
+                  icon: "fas fa-check-circle",
+                  title: "Aprobación",
+                  desc: "Revisas y apruebas el diseño final antes de la producción"
+                },
+                {
+                  icon: "fas fa-tshirt",
+                  title: "Producción",
+                  desc: "Fabricamos tus buzos con los más altos estándares de calidad"
+                }
+              ].map((step, index) => (
+                <div className="process-card" key={index}>
+                  <div className="process-icon">
+                    <i className={step.icon}></i>
+                  </div>
+                  <h3>{step.title}</h3>
+                  <p>{step.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+}
+
+export default Buzos;
