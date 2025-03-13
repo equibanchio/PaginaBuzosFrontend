@@ -124,6 +124,56 @@ const Buzos: React.FC = () => {
       };
     }, []);
 
+    // Enhanced touch functionality for the carousel
+    useEffect(() => {
+      if (buzosRef.current) {
+        const carousel = buzosRef.current.querySelector('.buzos-carousel');
+        
+        let startX: number;
+        let isDragging = false;
+        
+        const handleTouchStart = (e: TouchEvent) => {
+          startX = e.touches[0].clientX;
+          isDragging = true;
+        };
+        
+        const handleTouchMove = (e: TouchEvent) => {
+          if (!isDragging) return;
+          
+          const currentX = e.touches[0].clientX;
+          const diff = startX - currentX;
+          
+          // Determine swipe direction
+          if (Math.abs(diff) > 50) { // threshold of 50px
+            if (diff > 0) {
+              // Swiped left
+              nextBuzo();
+            } else {
+              // Swiped right
+              prevBuzo();
+            }
+            isDragging = false;
+          }
+        };
+        
+        const handleTouchEnd = () => {
+          isDragging = false;
+        };
+        
+        if (carousel) {
+          carousel.addEventListener('touchstart', handleTouchStart);
+          carousel.addEventListener('touchmove', handleTouchMove);
+          carousel.addEventListener('touchend', handleTouchEnd);
+          
+          return () => {
+            carousel.removeEventListener('touchstart', handleTouchStart);
+            carousel.removeEventListener('touchmove', handleTouchMove);
+            carousel.removeEventListener('touchend', handleTouchEnd);
+          };
+        }
+      }
+    }, [nextBuzo, prevBuzo]);
+
     // Cambio automático del carrusel cada 5 segundos
     useEffect(() => {
       if (buzos.length > 0) {  // Solo activar el intervalo si hay buzos
@@ -166,6 +216,17 @@ const Buzos: React.FC = () => {
         return () => clearInterval(interval);
       }
     }, []);
+
+    // For better visibility of carousel progress
+    const renderPagination = () => {
+      return (
+        <div className="carousel-pagination">
+          <span className="current-slide">{currentBuzo + 1}</span>
+          <span className="slide-separator">/</span>
+          <span className="total-slides">{buzos.length}</span>
+        </div>
+      );
+    };
 
     return (
       <div className="buzos-page">
@@ -245,14 +306,17 @@ const Buzos: React.FC = () => {
                 </button>
               </div>
               
-              <div className="carousel-indicators">
-                {buzos.map((_, index) => (
-                  <button 
-                    key={index} 
-                    className={`indicator ${index === currentBuzo ? 'active' : ''}`}
-                    onClick={() => setCurrentBuzo(index)}
-                  />
-                ))}
+              <div className="carousel-controls">
+                <div className="carousel-indicators">
+                  {buzos.map((_, index) => (
+                    <button 
+                      key={index} 
+                      className={`indicator ${index === currentBuzo ? 'active' : ''}`}
+                      onClick={() => setCurrentBuzo(index)}
+                    />
+                  ))}
+                </div>
+                {renderPagination()}
               </div>
             </div>
             
