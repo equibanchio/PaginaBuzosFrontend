@@ -221,17 +221,6 @@ const Buzos: React.FC = () => {
       }
     }, []);
 
-    // For better visibility of carousel progress
-    const renderPagination = () => {
-      return (
-        <div className="carousel-pagination">
-          <span className="current-slide">{currentBuzo + 1}</span>
-          <span className="slide-separator">/</span>
-          <span className="total-slides">{buzos.length}</span>
-        </div>
-      );
-    };
-
     return (
       <div className="buzos-page">
         <header className="header">
@@ -320,7 +309,6 @@ const Buzos: React.FC = () => {
                     />
                   ))}
                 </div>
-                {renderPagination()}
               </div>
             </div>
             
