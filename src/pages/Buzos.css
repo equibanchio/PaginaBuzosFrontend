@@ -192,11 +192,11 @@ ul {
 
 /* Carrusel de Buzos */
 .buzos-carousel-container {
-  margin-bottom: 30px;
-  position: relative;
-  overflow: hidden;
+  margin-bottom: 40px;
   border-radius: 16px;
-  box-shadow: var(--hover-shadow);
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+  background: linear-gradient(145deg, #f6f8ff, #eaeeff); /* Subtle gradient background */
 }
 
 .carousel-navigation {
@@ -209,8 +209,11 @@ ul {
 .buzos-carousel {
   width: 100%;
   position: relative;
-  height: 400px; /* Puedes ajustar esto si es necesario */
+  height: 420px; /* Further reduced height */
   overflow: hidden;
+  border-radius: 0; /* Remove inner border radius */
+  border: none; /* Remove border since container has shadow */
+  background: transparent; /* Let container background show */
 }
 
 .carousel-item {
@@ -229,13 +232,14 @@ ul {
   pointer-events: all;
 }
 
+
 .carousel-button {
-  background: rgba(0, 8, 64, 0.7);
+  background: rgba(0, 8, 64, 0.8);
   color: white;
   border: none;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 50px; /* Larger buttons */
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -243,6 +247,7 @@ ul {
   position: absolute;
   z-index: 10;
   transition: all 0.3s ease;
+  font-size: 20px;
 }
 
 .prev-button {
@@ -261,23 +266,27 @@ ul {
 .carousel-indicators {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 15px;
+  position: relative;
+  z-index: 5;
 }
 
 .indicator {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px; /* Larger indicators */
   border-radius: 50%;
-  background: var(--medium-gray);
-  margin: 0 6px;
+  background: #d0d0d0; /* Lighter gray for inactive */
+  margin: 0 8px;
   cursor: pointer;
   border: none;
   transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow for depth */
 }
 
 .indicator.active {
-  background: var(--accent-color);
-  transform: scale(1.2);
+  background: var(--accent-color); /* Your accent color for active */
+  transform: scale(1.3); /* More noticeable scale */
+  box-shadow: 0 0 0 2px white, 0 0 0 4px rgba(10, 46, 255, 0.3); /* Double border effect */
 }
 
 .buzo-image {
@@ -286,14 +295,16 @@ ul {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--white);
+  background: url('/assets/pattern-light.svg') center/8%; /* Subtle pattern background */
+  padding: 5px; /* Minimal padding */
 }
 
 /* Nuevo estilo para la imagen del buzo */
 .buzo-img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain; /* Esto mantiene la proporción de la imagen */
+  max-width: 95%;
+  max-height: 95%; /* Larger image size within container */
+  object-fit: contain;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
 
 .buzo-button, .feature-button, .cta-button {

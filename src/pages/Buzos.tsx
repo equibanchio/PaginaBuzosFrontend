@@ -2,6 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './Buzos.css';
 import logo from '../assets/logo.png';
+// Importa las imágenes de buzos desde assets (asumiendo que las tendrás en esta carpeta)
+// Por ejemplo:
+import buzo1 from '../assets/buzos/buzo1.png';
+import buzo2 from '../assets/buzos/buzo2.png';
+import buzo3 from '../assets/buzos/buzo3.png';
+// Añade más importaciones según necesites
 
 const Buzos: React.FC = () => {
     // Estado para controlar el menú responsive
@@ -15,9 +21,13 @@ const Buzos: React.FC = () => {
 
     const location = useLocation();
 
-    // Datos de ejemplo para los buzos
-    const [buzos, setBuzos] = useState<{ id: number; name: string; image: string; description: string }[]>([]);
-    const [loading, setLoading] = useState(true);
+    // Datos locales de buzos en lugar de cargarlos desde API
+    const buzos = [
+        { id: 1, name: "Buzo Modelo Clásico", image: buzo1, description: "Diseño clásico con capucha y bolsillo canguro" },
+        { id: 2, name: "Buzo Modelo Deportivo", image: buzo2, description: "Diseño deportivo con cremallera y bolsillos laterales" },
+        { id: 3, name: "Buzo Modelo Premium", image: buzo3, description: "Diseño premium con bordados personalizados" },
+        // Añade más buzos según necesites
+    ];
 
     // Añade esta parte al inicio del componente para manejar hash en URLs
     useEffect(() => {
@@ -32,35 +42,6 @@ const Buzos: React.FC = () => {
         }, 100);
       }
     }, []);
-
-    // Efecto para cargar los datos de los buzos
-    useEffect(() => {
-      const fetchBuzos = async () => {
-          try {
-            const response = await fetch("http://127.0.0.1:8000/api/buzos/");
-            if (!response.ok) {
-                throw new Error("Error al obtener los buzos");
-            }
-            const data = await response.json();
-            setBuzos(data);
-            console.log("Datos de buzos cargados:", data);
-          } catch (error) {
-            console.error("Error:", error);
-          } finally {
-            setLoading(false);
-          }
-      };
-  
-      fetchBuzos();
-    }, []);
-
-    // Efecto para monitorear cuando los buzos están cargados
-    useEffect(() => {
-      if (buzos.length > 0) {
-        console.log("Buzos disponibles:", buzos);
-        console.log("URL de primera imagen:", `http://127.0.0.1:8000${buzos[0].image}`);
-      }
-    }, [buzos]);
     
     // Manejar el cierre del menú al hacer clic en un enlace
     const handleMenuClick = () => {
@@ -186,25 +167,6 @@ const Buzos: React.FC = () => {
       }
     }, []);
 
-    // Función para construir la URL de la imagen correctamente
-    const getImageUrl = (imagePath: string) => {
-      // Si la ruta ya es una URL completa, devuélvela tal cual
-      if (imagePath.startsWith('http')) {
-        return imagePath;
-      }
-      
-      const baseUrl = "http://127.0.0.1:8000";
-      
-      // Si la ruta incluye /media/, no añadas nada más
-      if (imagePath.includes('/media/')) {
-        return `${baseUrl}${imagePath}`;
-      }
-      
-      // En otros casos, asegúrate de que la ruta incluya /media/
-      const mediaPath = imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
-      return `${baseUrl}/media${mediaPath}`;
-    };
-
     return (
       <div className="buzos-page">
         <header className="header">
@@ -262,29 +224,22 @@ const Buzos: React.FC = () => {
                 </button>
                 
                 <div className="buzos-carousel">
-                {loading ? (
-                  <p>Cargando buzos...</p>
-                ) : buzos.length === 0 ? (
-                  <p>No se encontraron buzos</p>
-                ) : (
-                  buzos.map((buzo, index) => (
-                    <div
-                      className={`carousel-item ${index === currentBuzo ? 'active' : ''}`}
-                      key={buzo.id}
-                    >
-                      <div className="buzo-image">
-                        <img 
-                          src={getImageUrl(buzo.image)} 
-                          alt={buzo.name} 
-                          className="buzo-img" 
-                          onLoad={() => console.log(`Imagen cargada correctamente: ${buzo.name}`)}
-                          onError={(e) => console.error(`Error cargando imagen ${buzo.name}:`, e)}
-                        />
-                      </div>
+                {buzos.map((buzo, index) => (
+                  <div
+                    className={`carousel-item ${index === currentBuzo ? 'active' : ''}`}
+                    key={buzo.id}
+                  >
+                    <div className="buzo-image">
+                      <img 
+                        src={buzo.image} 
+                        alt={buzo.name} 
+                        className="buzo-img"
+                      />
                     </div>
-                  ))
-                )}
+                  </div>
+                ))}
                 </div>
+                
                 <button className="carousel-button next-button" onClick={nextBuzo}>
                   <i className="fas fa-chevron-right"></i>
                 </button>
