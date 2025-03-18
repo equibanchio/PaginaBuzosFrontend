@@ -381,6 +381,52 @@ ul {
   box-shadow: 0 4px 10px rgba(10, 46, 255, 0.3);
 }
 
+.buzo-placeholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 80%;
+  background: linear-gradient(145deg, var(--medium-gray), var(--light-gray));
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  transition: transform 0.3s ease;
+}
+
+.carousel-item.active .buzo-placeholder {
+  transform: scale(1.02);
+}
+
+.soon-text {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--primary-color);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.soon-text:after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 4px;
+  background: var(--accent-color);
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.soon-description {
+  font-size: 18px;
+  color: var(--text-color);
+  text-align: center;
+  max-width: 200px;
+}
+
 /* Sección Mejora: Por qué elegirnos */
 .why-choose-us-section {
   margin-bottom: 30px;
@@ -682,6 +728,7 @@ ul {
     grid-template-columns: 1fr;
   }
   
+  
   /* MEJORADO: Banner para móvil */
   .buzos-banner h1 {
     font-size: 32px;
@@ -773,6 +820,14 @@ ul {
   .feature-list li {
     padding: 12px;
   }
+}
+
+.soon-text {
+  font-size: 36px;
+}
+
+.soon-description {
+  font-size: 16px;
 }
 
 /* MEJORADO: Para móviles muy pequeños */

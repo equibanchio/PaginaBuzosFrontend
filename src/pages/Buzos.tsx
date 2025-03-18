@@ -29,6 +29,9 @@ const Buzos: React.FC = () => {
         // Añade más buzos según necesites
     ];
 
+    // Añade esta constante cerca del inicio del componente, después de los estados
+  const SHOW_PLACEHOLDER = true; // Cambia a false cuando tengas las imágenes reales
+
     // Añade esta parte al inicio del componente para manejar hash en URLs
     useEffect(() => {
       // Comprueba si hay un hash en la URL cuando se monta el componente
@@ -270,47 +273,29 @@ const Buzos: React.FC = () => {
               </div>
             </div>
             
-            {/* Carrusel de buzos - Una imagen a la vez - Solo imágenes sin texto */}
-            <div className="buzos-carousel-container animate-on-scroll">
-              <div className="carousel-navigation">
-                <button className="carousel-button prev-button" onClick={prevBuzo}>
-                  <i className="fas fa-chevron-left"></i>
-                </button>
-                
-                <div className="buzos-carousel">
-                {buzos.map((buzo, index) => (
-                  <div
-                    className={`carousel-item ${index === currentBuzo ? 'active' : ''}`}
-                    key={buzo.id}
-                  >
-                    <div className="buzo-image">
-                      <img 
-                        src={buzo.image} 
-                        alt={buzo.name} 
-                        className="buzo-img"
-                      />
-                    </div>
-                  </div>
-                ))}
-                </div>
-                
-                <button className="carousel-button next-button" onClick={nextBuzo}>
-                  <i className="fas fa-chevron-right"></i>
-                </button>
-              </div>
-              
-              <div className="carousel-controls">
-                <div className="carousel-indicators">
-                  {buzos.map((_, index) => (
-                    <button 
-                      key={index} 
-                      className={`indicator ${index === currentBuzo ? 'active' : ''}`}
-                      onClick={() => setCurrentBuzo(index)}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
+           <div className="buzos-carousel">
+  {buzos.map((buzo, index) => (
+    <div
+      className={`carousel-item ${index === currentBuzo ? 'active' : ''}`}
+      key={buzo.id}
+    >
+      <div className="buzo-image">
+        {SHOW_PLACEHOLDER ? (
+          <div className="buzo-placeholder">
+            <span className="soon-text">SOON</span>
+            <p className="soon-description">{buzo.name}</p>
+          </div>
+        ) : (
+          <img 
+            src={buzo.image} 
+            alt={buzo.name} 
+            className="buzo-img"
+          />
+        )}
+      </div>
+    </div>
+  ))}
+</div>
             
             {/* Sección mejorada - La Diferencia Great Graduates */}
             <div className="why-choose-us-section animate-on-scroll">
