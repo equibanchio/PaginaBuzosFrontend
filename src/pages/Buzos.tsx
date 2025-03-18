@@ -282,8 +282,7 @@ const Buzos: React.FC = () => {
       <div className="buzo-image">
         {SHOW_PLACEHOLDER ? (
           <div className="buzo-placeholder">
-            <span className="soon-text">SOON</span>
-            <p className="soon-description">{buzo.name}</p>
+            <span className="soon-text">SOON...</span>
           </div>
         ) : (
           <img 

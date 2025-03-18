@@ -750,6 +750,14 @@ ul {
   .process-icon {
     font-size: 36px;
   }
+
+  .soon-text {
+    font-size: 36px;
+  }
+  
+  .soon-description {
+    font-size: 16px;
+  }
 }
 
 /* MEJORADO: Específicamente para móviles pequeños */
@@ -822,12 +830,14 @@ ul {
   }
 }
 
-.soon-text {
-  font-size: 36px;
-}
-
-.soon-description {
-  font-size: 16px;
+@media (max-width: 576px) {
+  .soon-text {
+    font-size: 30px;
+  }
+  
+  .soon-description {
+    font-size: 14px;
+  }
 }
 
 /* MEJORADO: Para móviles muy pequeños */
