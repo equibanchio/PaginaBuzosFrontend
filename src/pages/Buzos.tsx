@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './Buzos.css';
-import logo from '../assets/logo.png';
+import logo from '../assets/GreatLogo.png';
 // Importa las imágenes de buzos desde assets (asumiendo que las tendrás en esta carpeta)
 // Por ejemplo:
 import buzo1 from '../assets/buzos/buzo1.png';

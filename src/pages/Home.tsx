@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Home.css';
-import logo from '../assets/logo.png';
-import logo2 from '../assets/logo2.png';
+import logo from '../assets/GreatLogo.png'
+import logo2 from '../assets/GreatLogo2.png'
 import SantaCruz from '../assets/SantaCruz.png';
 import Southside from '../assets/Southside.png';
 import whatsapp from '../assets/whatsapp.png';
