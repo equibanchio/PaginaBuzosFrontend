@@ -231,6 +231,24 @@ const Home: React.FC = () => {
           <img src={Click} alt="Logo del beneficio de fotografía" />
         </div>
       </div>
+      {/* New Crew Benefits Card */}
+      <div className="benefit-card dark-theme centered-third">
+              <div className="benefit-content">
+                <h3>BENEFICIOS CREW GREAT</h3>
+                <h2>EXTRAS</h2>
+                <h3>PARA TU CURSO</h3>
+                <div className="benefit-highlight">BENEFICIOS ADICIONALES</div>
+                <ul className="benefit-list">
+                  <li>ENVÍO GRATIS</li>
+                  <li>BUZO LIBERADO PARA EL CURSO</li>
+                  <li>BANDERA DE REGALO</li>
+                </ul>
+                <p className="benefit-hashtag">#SOMOSGREAT</p>
+              </div>
+              <div className="benefit-logo">
+                <img src={logo2} alt="Crew Benefits" />
+              </div>
+          </div>
     </div>
   </div>
 </section>
