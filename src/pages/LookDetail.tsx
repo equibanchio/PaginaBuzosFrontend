@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, MessageCircle, ChevronLeft, ChevronRight, X, Maximize2, Share2 } from 'lucide-react';
+import { ArrowLeft, MessageCircle, ChevronLeft, ChevronRight, X, Maximize2, Share2, Copy, CheckCircle2 } from 'lucide-react';
 import { looks } from '../data/looks';
 import Button from '../components/ui/Button';
 
@@ -11,10 +11,27 @@ const LookDetail: React.FC = () => {
 
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+    const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+    const [isCopied, setIsCopied] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [id]);
+
+    // Preload next and previous images for instant display when swiping
+    useEffect(() => {
+        if (!look) return;
+        const preloadImage = (src: string) => {
+            const img = new Image();
+            img.src = src;
+        };
+        const nextIdx = (currentImageIndex + 1) % look.images.length;
+        const prevIdx = (currentImageIndex - 1 + look.images.length) % look.images.length;
+
+        // Preload if they exist
+        if (look.images[nextIdx]) preloadImage(look.images[nextIdx]);
+        if (look.images[prevIdx]) preloadImage(look.images[prevIdx]);
+    }, [currentImageIndex, look]);
 
     if (!look) {
         return (
@@ -49,22 +66,23 @@ const LookDetail: React.FC = () => {
         window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
     };
 
-    const handleShare = async () => {
+    const handleShare = () => {
+        setIsShareModalOpen(true);
+    };
+
+    const copyToClipboard = async () => {
         try {
-            if (navigator.share) {
-                await navigator.share({
-                    title: `Página Buzos - ${look.title}`,
-                    text: `Mirá este diseño para nuestro curso: ${look.title}`,
-                    url: window.location.href,
-                });
-            } else {
-                // Fallback: Copy to clipboard if Web Share API is not supported
-                await navigator.clipboard.writeText(window.location.href);
-                alert('¡Link copiado al portapapeles!');
-            }
+            await navigator.clipboard.writeText(window.location.href);
+            setIsCopied(true);
+            setTimeout(() => setIsCopied(false), 2000);
         } catch (error) {
-            console.error('Error sharing:', error);
+            console.error('Error copying:', error);
         }
+    };
+
+    const shareToWhatsApp = () => {
+        const text = `¡Mirá este diseño para nuestro curso: ${look.title}!\n\n${window.location.href}`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
     };
 
     return (
@@ -72,7 +90,7 @@ const LookDetail: React.FC = () => {
             <div className="container mx-auto px-6 py-24 md:py-32">
 
                 {/* Navigation */}
-                <Link to="/" className="inline-flex items-center gap-2 text-gray-500 hover:text-[#0a0f1d] mb-8 font-medium transition-colors">
+                <Link to="/buzos" className="inline-flex items-center gap-2 text-gray-500 hover:text-[#0a0f1d] mb-8 font-medium transition-colors">
                     <ArrowLeft className="w-5 h-5" /> Volver a la Colección
                 </Link>
 
@@ -90,16 +108,17 @@ const LookDetail: React.FC = () => {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
-                                    transition={{ duration: 0.3 }}
+                                    transition={{ duration: 0.2, ease: "easeOut" }}
                                     className="w-full h-full object-cover cursor-zoom-in"
                                     onClick={() => setIsLightboxOpen(true)}
                                     drag="x"
                                     dragConstraints={{ left: 0, right: 0 }}
-                                    dragElastic={1}
+                                    dragElastic={0.8}
                                     onDragEnd={(_e, { offset, velocity }) => {
                                         const swipe = Math.abs(offset.x) * velocity.x;
-                                        if (swipe < -10000) nextImage();
-                                        else if (swipe > 10000) prevImage();
+                                        // Lowered threshold and added direct offset check for much easier swiping
+                                        if (swipe < -3000 || offset.x < -60) nextImage();
+                                        else if (swipe > 3000 || offset.x > 60) prevImage();
                                     }}
                                 />
                             </AnimatePresence>
@@ -283,6 +302,70 @@ const LookDetail: React.FC = () => {
                         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-black/50 px-4 py-2 rounded-full text-white/80 text-sm backdrop-blur-md">
                             {currentImageIndex + 1} / {look.images.length}
                         </div>
+                    </motion.div>
+                )}
+
+                {/* Share Modal */}
+                {isShareModalOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+                        onClick={() => setIsShareModalOpen(false)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, y: 20 }}
+                            animate={{ scale: 1, y: 0 }}
+                            exit={{ scale: 0.9, y: 20 }}
+                            onClick={(e) => e.stopPropagation()}
+                            className="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl relative"
+                        >
+                            <button
+                                onClick={() => setIsShareModalOpen(false)}
+                                className="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition-colors p-2"
+                            >
+                                <X size={24} />
+                            </button>
+
+                            <div className="flex flex-col items-center mb-6">
+                                <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-4">
+                                    <Share2 className="w-8 h-8 text-blue-600" />
+                                </div>
+                                <h3 className="text-2xl font-black text-[#0a0f1d] uppercase tracking-wide">Compartir Diseño</h3>
+                                <p className="text-gray-500 text-sm text-center font-medium mt-2">Mándale este link a tu curso para que vean este modelo.</p>
+                            </div>
+
+                            <div className="space-y-3">
+                                <button
+                                    onClick={shareToWhatsApp}
+                                    className="w-full flex items-center justify-center gap-3 bg-green-500 hover:bg-green-600 text-white py-4 rounded-xl font-bold uppercase tracking-wider transition-colors shadow-lg shadow-green-500/20"
+                                >
+                                    <MessageCircle className="w-5 h-5 fill-current" />
+                                    Enviar por WhatsApp
+                                </button>
+
+                                <button
+                                    onClick={copyToClipboard}
+                                    className={`w-full flex items-center justify-center gap-3 py-4 rounded-xl font-bold uppercase tracking-wider transition-all border-2 ${isCopied
+                                        ? 'bg-blue-50 border-blue-200 text-blue-700'
+                                        : 'bg-white border-gray-200 text-gray-700 hover:border-gray-300 hover:bg-gray-50'
+                                        }`}
+                                >
+                                    {isCopied ? (
+                                        <>
+                                            <CheckCircle2 className="w-5 h-5" />
+                                            ¡Enlace Copiado!
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Copy className="w-5 h-5" />
+                                            Copiar Enlace
+                                        </>
+                                    )}
+                                </button>
+                            </div>
+                        </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
