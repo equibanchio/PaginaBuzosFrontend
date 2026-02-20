@@ -19,26 +19,16 @@ interface Benefit {
 const benefitsData: Benefit[] = [
     {
         id: 1,
-        title: "GARANTÍA X CONTRATO",
-        description: "Tu seguridad es lo primero. Respaldo total por escrito en cada prenda de tu curso.",
+        title: "GARANTÍA X CONTRATO Y ENVÍO GRATIS",
+        description: "Tu seguridad es lo primero con respaldo escrito, más envío sin cargo adicional a la puerta de tu colegio en todo el país.",
     },
     {
         id: 2,
-        title: "BUZOS LIBERADOS PARA PROFESORES",
-        description: "Para los profes que los acompañaron en todo el recorrido escolar.",
+        title: "BANDERA DE REGALO Y BUZOS LIBERADOS",
+        description: "La bandera más zarpada para Bariloche y buzos de regalo para los profes que los acompañaron en el recorrido.",
     },
     {
         id: 3,
-        title: "BANDERA DE REGALO",
-        description: "La bandera más zarpada para llevar a Bariloche y explotar la presentación.",
-    },
-    {
-        id: 4,
-        title: "ENVÍO GRATIS A TODO EL PAÍS",
-        description: "Estemos donde estemos, los buzos llegan a la puerta de tu colegio sin cargo adicional.",
-    },
-    {
-        id: 5,
         title: "DESCUENTO EN FIESTAS DE EGRESADOS (SANTACRUZ)",
         description: "Beneficios exclusivos en Santacruz Eventos para una noche inolvidable.",
         logos: [
@@ -46,7 +36,7 @@ const benefitsData: Benefit[] = [
         ]
     },
     {
-        id: 6,
+        id: 4,
         title: "DESCUENTO EN FIESTAS DE EGRESADOS (KETHAL)",
         description: "Beneficios exclusivos en Kethal Club para una noche inolvidable.",
         logos: [
@@ -54,7 +44,7 @@ const benefitsData: Benefit[] = [
         ]
     },
     {
-        id: 7,
+        id: 5,
         title: "DESCUENTO EN PRODUCCIÓN DE FOTO Y VIDEO",
         description: "Ahorrá en la presentación de buzos, UPD y fiesta con el equipo de @clickgraduates_.",
         logos: [
@@ -62,7 +52,7 @@ const benefitsData: Benefit[] = [
         ]
     },
     {
-        id: 8,
+        id: 6,
         title: "MÉTODO DE RECAUDACIÓN MATINEE",
         description: "Posibilidad de armar una matinee con @nilus.arg para juntar plata para el curso de forma fácil y segura.",
         logos: [
@@ -70,7 +60,7 @@ const benefitsData: Benefit[] = [
         ]
     },
     {
-        id: 9,
+        id: 7,
         title: "DESCUENTO EN TRASLADOS EN MICROS",
         description: "Beneficio en @micros.bsas para moverse todo el curso (Válido solo en AMBA y CABA).",
         logos: [
