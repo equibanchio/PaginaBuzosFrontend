@@ -7,9 +7,9 @@ const rawImages = import.meta.glob<{ default: string }>('../../assets/buzosCarou
 const allImages = Object.values(rawImages).map((module) => module.default);
 
 const BuzoCarousel: React.FC = () => {
-    // Randomize images on initial mount
+    // Randomize images on initial mount and limit to 10 to prevent memory overload
     const images = useMemo(() => {
-        return [...allImages].sort(() => Math.random() - 0.5);
+        return [...allImages].sort(() => Math.random() - 0.5).slice(0, 10);
     }, []);
 
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -108,6 +108,7 @@ const BuzoCarousel: React.FC = () => {
                                     src={img}
                                     alt={`Slide ${index + 1}`}
                                     className="w-full h-full object-cover object-center"
+                                    loading={index === 0 || index === 1 || index === images.length - 1 ? "eager" : "lazy"}
                                 />
                             </motion.div>
                         ))}

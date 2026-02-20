@@ -133,7 +133,7 @@ const ProcessSteps: React.FC = () => {
 
                                 {/* Step Number (Floating Decoration) */}
                                 <div className={`
-                                    absolute top-0 text-9xl font-black text-gray-50 -z-10 select-none pointer-events-none transform
+                                    hidden md:block absolute top-0 text-9xl font-black text-gray-50 -z-10 select-none pointer-events-none transform
                                     ${index % 2 === 0 ? 'md:left-1/2 md:-translate-x-full md:-ml-32' : 'md:left-1/2 md:ml-32'}
                                     left-16 md:left-auto
                                 `}>

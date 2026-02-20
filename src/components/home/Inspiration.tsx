@@ -23,8 +23,8 @@ const Inspiration: React.FC = () => {
                     {/* Card 1: Inspirate */}
                     <div className="relative group">
                         {/* Decorative Background - Logo Watermark */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] opacity-[0.03] pointer-events-none z-0 flex items-center justify-center">
-                            <img src={logo} alt="" className="w-full h-full object-contain brightness-0" />
+                        <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] opacity-[0.03] pointer-events-none z-0 items-center justify-center">
+                            <img src={logo} alt="" className="w-full h-full object-contain brightness-0" loading="lazy" />
                         </div>
 
                         {/* Image Container */}

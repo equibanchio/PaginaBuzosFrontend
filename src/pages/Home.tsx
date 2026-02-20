@@ -1,11 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Sparkles, ArrowRight } from 'lucide-react';
 import Hero from '../components/home/Hero';
 import Inspiration from '../components/home/Inspiration';
 import Features from '../components/home/Features';
+import { looks } from '../data/looks';
 
 const Home: React.FC = () => {
+    // Preload collection images for instant navigation feeling
+    useEffect(() => {
+        const preloadImages = () => {
+            // Get the first 4 looks to preload their main images
+            const imagesToPreload = looks.slice(0, 4).map(look => look.images[0]);
+
+            imagesToPreload.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        };
+
+        // Delay preloading slightly so it doesn't block initial page render
+        const timer = setTimeout(preloadImages, 2000);
+        return () => clearTimeout(timer);
+    }, []);
     return (
         <div className="bg-white">
             <Hero />

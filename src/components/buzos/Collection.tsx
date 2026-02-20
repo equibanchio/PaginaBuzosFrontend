@@ -11,9 +11,9 @@ const Collection: React.FC = () => {
             {/* Decorative Background Elements */}
             <div className="absolute top-20 left-0 w-full h-full pointer-events-none overflow-hidden select-none">
                 {/* Floating Logos */}
-                <img src={logo} alt="" className="absolute top-[10%] right-[10%] w-24 md:w-32 opacity-25 rotate-[15deg]" />
-                <img src={logo} alt="" className="absolute top-[50%] left-[8%] w-20 md:w-28 opacity-[0.15] -rotate-[10deg]" />
-                <img src={logo} alt="" className="absolute bottom-[10%] right-[15%] w-24 opacity-20 rotate-[10deg]" />
+                <img src={logo} alt="" className="hidden md:block absolute top-[10%] right-[10%] w-24 md:w-32 opacity-25 rotate-[15deg]" loading="lazy" />
+                <img src={logo} alt="" className="hidden md:block absolute top-[50%] left-[8%] w-20 md:w-28 opacity-[0.15] -rotate-[10deg]" loading="lazy" />
+                <img src={logo} alt="" className="hidden md:block absolute bottom-[10%] right-[15%] w-24 opacity-20 rotate-[10deg]" loading="lazy" />
 
                 <div className="hidden md:block absolute top-[10%] -left-[10%] text-[15rem] font-black text-gray-200 opacity-60 rotate-12 whitespace-nowrap drop-shadow-sm">
                     NEW DROP
@@ -66,11 +66,13 @@ const Collection: React.FC = () => {
                                         src={look.images[0]}
                                         alt={look.title}
                                         className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-110 group-hover:opacity-0"
+                                        loading={index > 3 ? "lazy" : "eager"}
                                     />
                                     <img
                                         src={look.images[1] || look.images[0]}
                                         alt={`${look.title} detail`}
                                         className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                                        loading="lazy"
                                     />
 
                                     {/* Hover Overlay */}
