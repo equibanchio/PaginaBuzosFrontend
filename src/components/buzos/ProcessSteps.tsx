@@ -59,8 +59,8 @@ const ProcessSteps: React.FC = () => {
                 <img src={logo} alt="" className="absolute top-[20%] left-[8%] w-32 opacity-25 -rotate-[15deg]" />
                 <img src={logo} alt="" className="absolute bottom-[20%] right-[8%] w-40 opacity-20 rotate-[15deg]" />
 
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-200/50 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
-                <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-200/50 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2"></div>
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-200/50 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 hidden md:block"></div>
+                <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-200/50 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2 hidden md:block"></div>
             </div>
 
             <div className="container mx-auto px-6 relative z-10" ref={containerRef}>

@@ -27,6 +27,9 @@ const BuzoCarousel: React.FC = () => {
         return 'leftHidden';
     };
 
+    // Check if device is mobile to turn off expensive blur filters
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
     const variants = {
         center: {
             x: "0%",
@@ -40,28 +43,28 @@ const BuzoCarousel: React.FC = () => {
             scale: 0.7,
             zIndex: 5,
             opacity: 0.8,
-            filter: "blur(2px)",
+            filter: isMobile ? "blur(0px)" : "blur(2px)",
         },
         right: {
             x: "60%",
             scale: 0.7,
             zIndex: 5,
             opacity: 0.8,
-            filter: "blur(2px)",
+            filter: isMobile ? "blur(0px)" : "blur(2px)",
         },
         rightHidden: {
             x: "100%",
             scale: 0.5,
             zIndex: 1,
             opacity: 0,
-            filter: "blur(5px)",
+            filter: isMobile ? "blur(0px)" : "blur(5px)",
         },
         leftHidden: {
             x: "-100%",
             scale: 0.5,
             zIndex: 1,
             opacity: 0,
-            filter: "blur(5px)",
+            filter: isMobile ? "blur(0px)" : "blur(5px)",
         }
     };
 

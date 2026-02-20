@@ -15,14 +15,14 @@ const Collection: React.FC = () => {
                 <img src={logo} alt="" className="absolute top-[50%] left-[8%] w-20 md:w-28 opacity-[0.15] -rotate-[10deg]" />
                 <img src={logo} alt="" className="absolute bottom-[10%] right-[15%] w-24 opacity-20 rotate-[10deg]" />
 
-                <div className="absolute top-[10%] -left-[10%] text-[15rem] font-black text-gray-200 opacity-60 rotate-12 whitespace-nowrap drop-shadow-sm">
+                <div className="hidden md:block absolute top-[10%] -left-[10%] text-[15rem] font-black text-gray-200 opacity-60 rotate-12 whitespace-nowrap drop-shadow-sm">
                     NEW DROP
                 </div>
-                <div className="absolute bottom-[20%] -right-[10%] text-[15rem] font-black text-gray-200 opacity-60 -rotate-12 whitespace-nowrap drop-shadow-sm">
+                <div className="hidden md:block absolute bottom-[20%] -right-[10%] text-[15rem] font-black text-gray-200 opacity-60 -rotate-12 whitespace-nowrap drop-shadow-sm">
                     COLLECTION
                 </div>
-                <div className="absolute top-1/3 right-20 w-[500px] h-[500px] bg-blue-200 rounded-full blur-[150px] opacity-20 mix-blend-multiply"></div>
-                <div className="absolute bottom-1/3 left-20 w-[600px] h-[600px] bg-purple-200 rounded-full blur-[150px] opacity-20 mix-blend-multiply"></div>
+                <div className="hidden md:block absolute top-1/3 right-20 w-[500px] h-[500px] bg-blue-200 rounded-full blur-[150px] opacity-20 mix-blend-multiply"></div>
+                <div className="hidden md:block absolute bottom-1/3 left-20 w-[600px] h-[600px] bg-purple-200 rounded-full blur-[150px] opacity-20 mix-blend-multiply"></div>
             </div>
 
             <div className="container mx-auto px-6 relative z-10">
