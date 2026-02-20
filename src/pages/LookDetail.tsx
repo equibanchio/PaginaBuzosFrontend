@@ -18,7 +18,7 @@ const LookDetail: React.FC = () => {
 
     if (!look) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-white">
+            <div className="min-h-[100dvh] flex items-center justify-center bg-white">
                 <div className="text-center">
                     <h2 className="text-3xl font-bold mb-4">Modelo no encontrado</h2>
                     <Link to="/" className="text-blue-600 hover:underline">Volver al inicio</Link>
@@ -68,7 +68,7 @@ const LookDetail: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-[100dvh] bg-white">
             <div className="container mx-auto px-6 py-24 md:py-32">
 
                 {/* Navigation */}
@@ -142,7 +142,7 @@ const LookDetail: React.FC = () => {
                                     onClick={() => setCurrentImageIndex(index)}
                                     className={`relative aspect-square rounded-xl overflow-hidden transition-all ${currentImageIndex === index ? 'ring-2 ring-blue-600 ring-offset-2' : 'opacity-70 hover:opacity-100'}`}
                                 >
-                                    <img src={img} alt={`Thumbnail ${index}`} className="w-full h-full object-cover" />
+                                    <img src={img} alt={`Thumbnail ${index}`} className="w-full h-full object-cover" loading="lazy" />
                                 </button>
                             ))}
                         </div>

@@ -6,7 +6,7 @@ import bgImage from '../../assets/buzos/Buzos-7.jpg';
 
 const Hero: React.FC = () => {
     return (
-        <section className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-primary-dark">
+        <section className="relative min-h-[100dvh] w-full overflow-hidden flex items-center justify-center bg-primary-dark">
             {/* Background Image (Static for Performance) */}
             <div className="absolute inset-0 z-0">
                 <div

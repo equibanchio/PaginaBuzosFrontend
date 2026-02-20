@@ -3,17 +3,12 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { looks } from '../../data/looks';
 import { ArrowRight } from 'lucide-react';
-import logo from '../../assets/GreatLogo.png';
 
 const Collection: React.FC = () => {
     return (
         <section className="py-24 bg-gray-50 relative overflow-hidden">
             {/* Decorative Background Elements */}
             <div className="absolute top-20 left-0 w-full h-full pointer-events-none overflow-hidden select-none">
-                {/* Floating Logos */}
-                <img src={logo} alt="" className="hidden md:block absolute top-[10%] right-[10%] w-24 md:w-32 opacity-25 rotate-[15deg]" loading="lazy" />
-                <img src={logo} alt="" className="hidden md:block absolute top-[50%] left-[8%] w-20 md:w-28 opacity-[0.15] -rotate-[10deg]" loading="lazy" />
-                <img src={logo} alt="" className="hidden md:block absolute bottom-[10%] right-[15%] w-24 opacity-20 rotate-[10deg]" loading="lazy" />
 
                 <div className="hidden md:block absolute top-[10%] -left-[10%] text-[15rem] font-black text-gray-200 opacity-60 rotate-12 whitespace-nowrap drop-shadow-sm">
                     NEW DROP

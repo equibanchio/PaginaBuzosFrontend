@@ -201,7 +201,7 @@ const BenefitsPage: React.FC = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-[#0a0f1d] selection:bg-primary selection:text-white">
+        <div className="min-h-[100dvh] bg-[#0a0f1d] selection:bg-primary selection:text-white">
 
             {/* Detailed Background specific to Beneficios */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
@@ -212,7 +212,7 @@ const BenefitsPage: React.FC = () => {
                 <div className="absolute top-[40%] left-[-200px] w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[120px] mix-blend-screen"></div>
             </div>
 
-            <div className="container mx-auto px-6 py-32 relative z-10 min-h-screen flex flex-col">
+            <div className="container mx-auto px-6 py-32 relative z-10 min-h-[100dvh] flex flex-col">
                 {/* Header */}
                 <div className="text-center max-w-3xl mx-auto mb-20 pt-10">
                     <motion.div

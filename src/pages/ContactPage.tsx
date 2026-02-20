@@ -11,7 +11,7 @@ const ContactPage: React.FC = () => {
     const formAction = "https://formsubmit.co/lautarofranco1@hotmail.com";
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-[100dvh] bg-white">
             <div className="container mx-auto px-6 py-32 md:py-40">
 
                 <div className="text-center max-w-3xl mx-auto mb-16">

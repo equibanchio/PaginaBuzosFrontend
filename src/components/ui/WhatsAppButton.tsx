@@ -1,10 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MessageCircle } from 'lucide-react';
 
 const WhatsAppButton: React.FC = () => {
     // URL containing the pre-filled message
     const whatsappUrl = "https://wa.me/5491168972616?text=¡Hola!%20Estoy%20visitando%20la%20página%20web%20de%20GREAT%20GRADUATES%20y%20me%20gustaría%20hacer%20una%20consulta.";
+
+    const [isVisible, setIsVisible] = useState(true);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            // Check if user has scrolled near the bottom of the page
+            const scrollPosition = window.innerHeight + window.scrollY;
+            const threshold = document.documentElement.scrollHeight - 150; // 150px from bottom
+
+            if (scrollPosition >= threshold) {
+                setIsVisible(false);
+            } else {
+                setIsVisible(true);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        // Fire once on mount in case they start at the bottom
+        handleScroll();
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Also hide completely if we want to avoid rendering it all
+    if (!isVisible) return null;
 
     return (
         <motion.div

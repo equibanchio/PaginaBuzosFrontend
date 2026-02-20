@@ -12,7 +12,7 @@ const PrivacyPolicy: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="pt-24 pb-16 bg-white min-h-screen"
+            className="pt-24 pb-16 bg-white min-h-[100dvh]"
         >
             <div className="container mx-auto px-6 max-w-4xl">
                 <div className="text-center mb-12">
